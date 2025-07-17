@@ -1,123 +1,216 @@
-# IG Reel Script Fetcher CLI Tool
+# Mimicry - Instagram Reel Analyzer
 
-A command-line tool that downloads Instagram Reels, transcribes their audio, and compiles all transcripts into a single text file.
+AI-powered Instagram Reel analysis with transcription and content insights. Available as both a **command-line tool** and a **modern web application**.
 
-## Features
+## 🚀 Choose Your Interface
 
-- Download multiple Instagram Reels from URLs
-- Transcribe audio using OpenAI's Whisper model
-- Compile all transcripts into one clean text file
-- No login required
-- Progress bars for tracking downloads and transcription
+### 📱 Web Application ([/web-app](./web-app))
+Modern Next.js web interface with video player and beautiful results display.
 
-## Requirements
+### 💻 CLI Tool ([reel_fetcher.py](./reel_fetcher.py))
+Original Python command-line tool for batch processing and terminal usage.
 
-- Python 3.9+
-- ffmpeg
-- macOS or Linux
+---
 
-## Installation
+## 🎯 Features (Both Versions)
 
-### 1. Install ffmpeg
+- **🎬 Video Download**: Download Instagram Reels (no login required)
+- **📝 AI Transcription**: OpenAI Whisper speech-to-text
+- **😊 Sentiment Analysis**: Emotional tone analysis with confidence scores
+- **🏷️ Content Categorization**: Automatic content classification
+- **🔍 Keyword Extraction**: Key topics and important phrases
+- **📊 Content Summary**: AI-generated content summaries
 
-Using Homebrew (macOS):
+---
+
+## 🌐 Web Application
+
+### Quick Start
 ```bash
+cd web-app
+npm install
+cp env.example .env.local
+# Add your OPENAI_API_KEY to .env.local
+npm run dev
+```
+
+### Features
+- 🎥 **Video Player**: Watch reels with playback controls
+- 🌙 **Dark Theme**: Sleek black interface
+- 📱 **Responsive Design**: Works on all devices
+- ⚡ **Real-time Processing**: Live progress indicators
+- 🔗 **Direct Results**: Shareable analysis links
+
+[**📚 Full Web App Documentation →**](./web-app/README.md)
+
+---
+
+## 💻 CLI Tool
+
+### Quick Start
+```bash
+python3 reel_fetcher.py
+# Follow the prompts to enter URLs and save location
+```
+
+### Features
+- 📦 **Batch Processing**: Handle multiple URLs at once
+- 📁 **File Management**: Organized output with compiled transcripts
+- 🔄 **Progress Tracking**: Visual progress bars
+- 📋 **Export Options**: Multiple output formats
+- 🛠️ **Automation Ready**: Perfect for scripts and workflows
+
+### Usage Example
+```bash
+# Interactive mode
+python3 reel_fetcher.py
+
+# Enter your Instagram Reel URLs:
+> https://www.instagram.com/reel/example1/
+> https://www.instagram.com/reel/example2/
+> done
+
+# Results saved to your specified folder
+```
+
+---
+
+## �� System Requirements
+
+### Prerequisites (Both Versions)
+- **Python 3.9+** (for video processing)
+- **ffmpeg** (for audio extraction)
+- **OpenAI API Key** (for transcription and analysis)
+
+### Install Dependencies
+```bash
+# Install yt-dlp for Instagram downloads
+pip3 install yt-dlp
+
+# Install ffmpeg
+# macOS:
 brew install ffmpeg
+# Ubuntu/Debian:
+sudo apt update && sudo apt install ffmpeg
 ```
 
-### 2. Clone or download the script
+### Web App Additional Requirements
+- **Node.js 18+**
+- **npm or yarn**
 
-Navigate to your desired directory:
-```bash
-cd ~/Desktop/ig_fetcher
+---
+
+## 📋 Comparison
+
+| Feature | CLI Tool | Web App |
+|---------|----------|---------|
+| **Interface** | Terminal | Browser |
+| **Batch Processing** | ✅ Multiple URLs | 🚧 Single URL (expandable) |
+| **Video Playback** | ❌ | ✅ Built-in player |
+| **File Storage** | ✅ Local files | 💾 Temporary (in-memory) |
+| **Progress Tracking** | ✅ Progress bars | ✅ Loading animations |
+| **Deployment** | ❌ Local only | ✅ Web deployable |
+| **Sharing Results** | 📁 File sharing | 🔗 Direct links |
+| **Automation** | ✅ Script-friendly | 🌐 API endpoints |
+
+---
+
+## 🚀 Deployment Options
+
+### CLI Tool
+- Run locally on any machine with Python
+- Integrate into automation scripts
+- Perfect for batch processing workflows
+
+### Web App
+- **Vercel**: Frontend deployment (limited backend functionality)
+- **Railway/Render**: Full-stack with Python support
+- **Docker**: Containerized deployment anywhere
+
+---
+
+## 📝 API Reference (Web App)
+
+### Process a Reel
+```http
+POST /api/process-reel
+Content-Type: application/json
+
+{
+  "url": "https://www.instagram.com/reel/..."
+}
 ```
 
-### 3. Install dependencies
+### Get Results
+```http
+GET /api/process-reel?id={analysis-id}
+```
 
-Dependencies will be automatically installed on first run:
-- `yt-dlp` (for downloading reels)
-- `whisper` (for transcription)
-- `tqdm` (for progress bars)
+**Response:**
+```json
+{
+  "id": "uuid",
+  "title": "Video Title",
+  "transcript": "Full transcript...",
+  "analysis": {
+    "sentiment": { "score": 0.8, "label": "positive", "confidence": 0.95 },
+    "topics": ["topic1", "topic2"],
+    "keywords": ["keyword1", "keyword2"],
+    "category": "entertainment",
+    "summary": "Brief summary..."
+  },
+  "videoBase64": "data:video/mp4;base64,..."
+}
+```
 
-## Usage
+---
 
-### 1. Run the tool
+## ⚠️ Limitations
 
+- **Public Reels Only**: Private/restricted content cannot be accessed
+- **Instagram Dependencies**: Relies on Instagram's accessibility
+- **OpenAI Costs**: API usage charges apply
+- **Processing Time**: Depends on video length and internet speed
+
+---
+
+## 🛠️ Development
+
+### CLI Tool
 ```bash
+# Edit reel_fetcher.py directly
 python3 reel_fetcher.py
 ```
 
-### 2. Choose save location
-
-When prompted, enter the folder path where you want to save videos and transcripts:
-```
-Enter folder to save videos and transcripts:
-> /Users/yourusername/Documents/ig_videos
-```
-
-*Note: The folder will be created if it doesn't exist.*
-
-### 3. Add Instagram Reel URLs
-
-Paste your Reel links one per line:
-```
-> https://www.instagram.com/reel/CzHgPY0yO6b/
-> https://www.instagram.com/reel/C5EyWnbPIje/
-> done
+### Web App
+```bash
+cd web-app
+npm run dev      # Development server
+npm run build    # Production build
+npm run lint     # Code linting
 ```
 
-Type `done` when you've added all links.
+---
 
-### 4. Wait for processing
+## 🤝 Contributing
 
-The tool will show progress bars for:
-- Downloading reels
-- Transcribing audio
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-```
-📥 Downloading 3 reels...
-Downloading: 100%|████████████████████| 3/3
+---
 
-📝 Transcribing...
-Transcribing: 100%|████████████████████| 3/3
-```
+## 📄 License
 
-### 5. Get your results
+MIT License - see [LICENSE](LICENSE) file for details.
 
-Final output location will be displayed:
-```
-📚 Compiled 3 transcript(s) into:
-/Users/yourusername/Documents/ig_videos/compiled_transcripts.txt
-```
+---
 
-## Output Structure
+## 🙏 Credits
 
-Your save folder will contain:
-- `Video title - reelID.mp4` (downloaded video files)
-- `Video title - reelID.txt` (individual transcripts)
-- `compiled_transcripts.txt` (all transcripts combined)
-- `failed_links.txt` (any URLs that failed to download)
-
-## Limitations
-
-- Only works with **public Instagram Reels**
-- Private or restricted content cannot be downloaded
-- Requires stable internet connection
-- Processing time depends on video length and quantity
-
-## Troubleshooting
-
-### Common Issues
-
-**"ffmpeg not found"**
-- Install ffmpeg using the installation instructions above
-
-**"Failed to download reel"**
-- Check if the reel is public
-- Verify the URL is correct
-- Check your internet connection
-
-**"Python command not found"**
-- Make sure Python 3 is installed: `python3 --version`
-- On some systems, use `python` instead of `python3`
-
+- **CLI Tool**: Original Python implementation
+- **Web App**: Next.js/TypeScript implementation  
+- **AI Services**: OpenAI Whisper & GPT
+- **Video Processing**: yt-dlp & ffmpeg
